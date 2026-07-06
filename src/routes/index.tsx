@@ -27,23 +27,49 @@ export const Route = createFileRoute("/")({
 });
 
 type Filter = "ALL" | Brand;
+type Sort = "DEFAULT" | "CLOCK" | "CORES" | "CACHE" | "TDP";
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function parseNumeric(value: string): number {
+  const match = value.match(/[0-9]*\.?[0-9]+/);
+  return match ? parseFloat(match[0]) : 0;
+}
 
 function Index() {
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<Filter>("ALL");
+  const [sort, setSort] = useState<Sort>("DEFAULT");
   const [selected, setSelected] = useState<Product | null>(null);
   const [email, setEmail] = useState("");
   const [emailValid, setEmailValid] = useState(false);
 
   const filtered = useMemo(() => {
-    return products.filter((p) => {
+    const list = products.filter((p) => {
       const matchBrand = filter === "ALL" || p.brand === filter;
       const matchQuery = p.name.toLowerCase().includes(query.toLowerCase().trim());
       return matchBrand && matchQuery;
     });
-  }, [query, filter]);
+
+    const sorted = [...list];
+    switch (sort) {
+      case "CLOCK":
+        sorted.sort((a, b) => parseNumeric(b.specs.boostClock) - parseNumeric(a.specs.boostClock));
+        break;
+      case "CORES":
+        sorted.sort((a, b) => b.specs.cores - a.specs.cores);
+        break;
+      case "CACHE":
+        sorted.sort((a, b) => parseNumeric(b.specs.cache) - parseNumeric(a.specs.cache));
+        break;
+      case "TDP":
+        sorted.sort((a, b) => parseNumeric(a.specs.tdp) - parseNumeric(b.specs.tdp));
+        break;
+      default:
+        break;
+    }
+    return sorted;
+  }, [query, filter, sort]);
 
   function openProduct(p: Product) {
     setSelected(p);
