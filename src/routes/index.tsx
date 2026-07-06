@@ -96,7 +96,7 @@ function Index() {
         <div className="grid gap-6 md:grid-cols-[200px_1fr]">
           <aside data-testid="filter-sidebar" className="space-y-2">
             <p className="mb-2 text-sm font-semibold text-muted-foreground">Marca</p>
-            {(["ALL", "INTEL", "AMD"] as Filter[]).map((f) => (
+            {(["ALL", "INTEL", "AMD", "APPLE"] as Filter[]).map((f) => (
               <Button
                 key={f}
                 data-testid={`filter-${f.toLowerCase()}`}
