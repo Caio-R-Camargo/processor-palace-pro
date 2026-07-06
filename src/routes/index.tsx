@@ -120,19 +120,42 @@ function Index() {
         </div>
 
         <div className="grid gap-6 md:grid-cols-[200px_1fr]">
-          <aside data-testid="filter-sidebar" className="space-y-2">
-            <p className="mb-2 text-sm font-semibold text-muted-foreground">Marca</p>
-            {(["ALL", "INTEL", "AMD", "APPLE"] as Filter[]).map((f) => (
-              <Button
-                key={f}
-                data-testid={`filter-${f.toLowerCase()}`}
-                variant={filter === f ? "default" : "outline"}
-                className="w-full justify-start"
-                onClick={() => setFilter(f)}
-              >
-                {f === "ALL" ? "Todos" : f}
-              </Button>
-            ))}
+          <aside data-testid="filter-sidebar" className="space-y-6">
+            <div className="space-y-2">
+              <p className="mb-2 text-sm font-semibold text-muted-foreground">Marca</p>
+              {(["ALL", "INTEL", "AMD", "APPLE"] as Filter[]).map((f) => (
+                <Button
+                  key={f}
+                  data-testid={`filter-${f.toLowerCase()}`}
+                  variant={filter === f ? "default" : "outline"}
+                  className="w-full justify-start"
+                  onClick={() => setFilter(f)}
+                >
+                  {f === "ALL" ? "Todos" : f}
+                </Button>
+              ))}
+            </div>
+
+            <div className="space-y-2">
+              <p className="mb-2 text-sm font-semibold text-muted-foreground">Ordenar</p>
+              {([
+                { key: "DEFAULT", label: "Padrão", testid: "sort-default" },
+                { key: "CLOCK", label: "Maior Clock", testid: "sort-clock" },
+                { key: "CORES", label: "Mais Núcleos", testid: "sort-cores" },
+                { key: "CACHE", label: "Mais Cache", testid: "sort-cache" },
+                { key: "TDP", label: "Menor TDP", testid: "sort-tdp" },
+              ] as { key: Sort; label: string; testid: string }[]).map((s) => (
+                <Button
+                  key={s.key}
+                  data-testid={s.testid}
+                  variant={sort === s.key ? "default" : "outline"}
+                  className="w-full justify-start"
+                  onClick={() => setSort(s.key)}
+                >
+                  {s.label}
+                </Button>
+              ))}
+            </div>
           </aside>
 
           <section data-testid="product-list">
