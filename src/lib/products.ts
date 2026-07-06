@@ -1,7 +1,8 @@
 import intelImg from "@/assets/intel-cpu.asset.json";
 import amdImg from "@/assets/amd-cpu.asset.json";
+import appleImg from "@/assets/apple-cpu.asset.json";
 
-export type Brand = "INTEL" | "AMD";
+export type Brand = "INTEL" | "AMD" | "APPLE";
 
 export interface Product {
   id: string;
@@ -23,6 +24,7 @@ export interface Product {
 
 const intel = intelImg.url;
 const amd = amdImg.url;
+const apple = appleImg.url;
 
 export const products: Product[] = [
   { id: "i-1", name: "Intel Core Ultra 9 285K", brand: "INTEL", image: intel, price: "R$ 4.299", specs: { cores: 24, threads: 24, baseClock: "3.7 GHz", boostClock: "5.7 GHz", cache: "36 MB", tdp: "125 W", socket: "LGA 1851", lithography: "TSMC N3B" } },
