@@ -27,13 +27,18 @@ export const Route = createFileRoute("/")({
 });
 
 type Filter = "ALL" | Brand;
-type Sort = "DEFAULT" | "CLOCK" | "CORES" | "CACHE" | "TDP";
+type Sort = "DEFAULT" | "CLOCK" | "CORES" | "CACHE" | "TDP" | "PRICE";
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function parseNumeric(value: string): number {
   const match = value.match(/[0-9]*\.?[0-9]+/);
   return match ? parseFloat(match[0]) : 0;
+}
+
+function parsePrice(value: string): number {
+  const digits = value.replace(/\D/g, "");
+  return digits ? parseInt(digits, 10) : 0;
 }
 
 function Index() {
@@ -64,6 +69,9 @@ function Index() {
         break;
       case "TDP":
         sorted.sort((a, b) => parseNumeric(a.specs.tdp) - parseNumeric(b.specs.tdp));
+        break;
+      case "PRICE":
+        sorted.sort((a, b) => parsePrice(a.price) - parsePrice(b.price));
         break;
       default:
         break;
@@ -144,6 +152,7 @@ function Index() {
                 { key: "CORES", label: "Mais Núcleos", testid: "sort-cores" },
                 { key: "CACHE", label: "Mais Cache", testid: "sort-cache" },
                 { key: "TDP", label: "Menor TDP", testid: "sort-tdp" },
+                { key: "PRICE", label: "Menor Preço", testid: "sort-price" },
               ] as { key: Sort; label: string; testid: string }[]).map((s) => (
                 <Button
                   key={s.key}
