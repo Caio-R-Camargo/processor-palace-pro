@@ -18,9 +18,16 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "HardStore — Processadores Intel e AMD" },
-      { name: "description", content: "Catálogo de estudo com processadores Intel e AMD, com busca, filtros e especificações detalhadas." },
+      {
+        name: "description",
+        content:
+          "Catálogo de estudo com processadores Intel e AMD, com busca, filtros e especificações detalhadas.",
+      },
       { property: "og:title", content: "HardStore — Processadores Intel e AMD" },
-      { property: "og:description", content: "Catálogo de processadores Intel e AMD para testes de automação." },
+      {
+        property: "og:description",
+        content: "Catálogo de processadores Intel e AMD para testes de automação.",
+      },
     ],
   }),
   component: Index,
@@ -146,14 +153,16 @@ function Index() {
 
             <div className="space-y-2">
               <p className="mb-2 text-sm font-semibold text-muted-foreground">Ordenar</p>
-              {([
-                { key: "DEFAULT", label: "Padrão", testid: "sort-default" },
-                { key: "CLOCK", label: "Maior Clock", testid: "sort-clock" },
-                { key: "CORES", label: "Mais Núcleos", testid: "sort-cores" },
-                { key: "CACHE", label: "Mais Cache", testid: "sort-cache" },
-                { key: "TDP", label: "Menor TDP", testid: "sort-tdp" },
-                { key: "PRICE", label: "Menor Preço", testid: "sort-price" },
-              ] as { key: Sort; label: string; testid: string }[]).map((s) => (
+              {(
+                [
+                  { key: "DEFAULT", label: "Padrão", testid: "sort-default" },
+                  { key: "CLOCK", label: "Maior Clock", testid: "sort-clock" },
+                  { key: "CORES", label: "Mais Núcleos", testid: "sort-cores" },
+                  { key: "CACHE", label: "Mais Cache", testid: "sort-cache" },
+                  { key: "TDP", label: "Menor TDP", testid: "sort-tdp" },
+                  { key: "PRICE", label: "Menor Preço", testid: "sort-price" },
+                ] as { key: Sort; label: string; testid: string }[]
+              ).map((s) => (
                 <Button
                   key={s.key}
                   data-testid={s.testid}
@@ -177,7 +186,7 @@ function Index() {
                 {filtered.map((p) => (
                   <button
                     key={p.id}
-                    data-testid={`product-card-${p.id}`}
+                    data-testid="product-card"
                     onClick={() => openProduct(p)}
                     className="group flex flex-col overflow-hidden rounded-lg border bg-card text-left transition-all hover:border-primary hover:shadow-lg"
                   >
@@ -189,7 +198,9 @@ function Index() {
                       />
                     </div>
                     <div className="flex flex-1 flex-col gap-2 p-4">
-                      <Badge variant="secondary" className="w-fit">{p.brand}</Badge>
+                      <Badge variant="secondary" className="w-fit">
+                        {p.brand}
+                      </Badge>
                       <h3 className="font-semibold leading-tight">{p.name}</h3>
                       <p className="mt-auto text-lg font-bold text-primary">{p.price}</p>
                     </div>
@@ -212,7 +223,11 @@ function Index() {
 
               <div className="grid gap-6 md:grid-cols-2">
                 <div className="flex items-center justify-center rounded-lg bg-muted p-6">
-                  <img src={selected.image} alt={selected.name} className="max-h-56 object-contain" />
+                  <img
+                    src={selected.image}
+                    alt={selected.name}
+                    className="max-h-56 object-contain"
+                  />
                 </div>
 
                 <dl className="grid grid-cols-2 gap-3 text-sm">
